@@ -6,147 +6,311 @@ Be a Coder，任职要求
 黑马130期JAVA学员李鸣飞
 微信：leem97_
 有任何问题可与我联系，与学妹学弟一起成长！
-【本人使用本材料面试结果：4/8（50%）,7家甲方（3 offer，17k13薪/20k14薪/16k14薪），1家外包（1 offer，20k13薪）】20210927
+【本人使用本材料面试结果：2/8（25%）,1家甲方（1 offer，17k13薪），1家外包（1 offer，20k13薪）】20210927
 后续会继续更新
 ```
 
 
 
+### Java
+
 #### JAVA基础扎实
 
 ##### JavaBasis:
 
-- 什么是面向对象？
-  - 与面向过程对比阐述（面试官面试我/面试官.提问（）+我.回答（））
-  - 特性：
-    - 封装（外部调用无需关心内部实现并且不能修改，`Mybatis`封装`JDBC`）
-    - 继承（子类拥有父类方法&属性，扩展个性化需求）
-    - 多态（只能调用父类中有的方法/方法重写，如果想要调用子类的特有方法需要进行强转，父类类型 变量名=new 子类对象；变量名.子类方法名（），new不同的子类对象时，这个对象又是子类又是父类，体现了多种形态）
-      - **最直接的体现是当我们对一个父类数组进行遍历时，子类是允许加入这个数组的，这个适合遍历的变量就是多态的，因为它会针对性的遍历子类和父类不一样的数据，而此时，这种既可以输出子类的数据，又可以输出父类的数据，我们称为多态绑定，该变量则是多态的。**
-      - ![1662518185118](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1662518185118.png)
-    - 抽象 核心是代码的一个复用，对本质上相同的代码做一个抽取成为一个抽象类，抽象类（接口）就是为了继承而存在的
-      - 抽象可以帮助我们在对相同父类的子类进行集体操作时，方便的调用抽象类的方法并进行区别性的输出，即不同的抽象实现，并且输出不同的内容。
-        - ![1662535630628](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1662535630628.png)
+**什么是面向对象？**
+
+- 与面向过程对比阐述（面试官面试我/面试官.提问（）+我.回答（））
+
+  -  面向过程只是针对于自己来解决问题。面向过程的操作是以程序的基本功能实现为主，实现之后就完成了，也不考虑修改的可能性 
+
+- 特性：
+  - **封装**（外部调用无需关心内部实现并且不能修改，`Mybatis`封装`JDBC`）
   
-- 理解private、public、protected关键字
+  - **继承**（子类拥有父类方法&属性，扩展个性化需求）
+  
+  - **多态**（只能调用父类中有的方法/方法重写，如果想要调用子类的特有方法需要进行强转，父类类型 变量名=new 子类对象；变量名.子类方法名（），new不同的子类对象时，这个对象又是子类又是父类，体现了多种形态）
+    
+    - **最直接的体现是当我们对一个父类数组进行遍历时，子类是允许加入这个数组的，这个适合遍历的变量就是多态的，因为它会针对性的遍历子类和父类不一样的数据，而此时，这种既可以输出子类的数据，又可以输出父类的数据，我们称为多态绑定，该变量则是多态的。**
+    - ![1662518185118](asserts\1662518185118.png)
+    
+  - **抽象**，核心是代码的一个复用，对本质上相同的代码做一个抽取成为一个抽象类，抽象类就是为了继承而存在的
+    
+    - 抽象的类是用来被继承的，而final修饰的类是无法继承的，所以final无法修饰抽象类
+    
+    -  外部抽象类不允许使用static声明，而内部的抽象类运行使用static声明。使用static声明的内部抽象类相当于一个外部抽象类，继承的时候使用“外部类.内部类”的形式表示类名称。 
+    
+      - ```java
+        package com.wz.abstractdemo;
+        
+        abstract class A{//定义一个抽象类
+        	
+        	static abstract class B{//static定义的内部类属于外部类
+        		public abstract void print();
+        	}
+        	
+        }
+        
+        class C extends A.B{
+        	
+        	public void print(){
+        		System.out.println("**********");
+        	}
+        }
+        public class TestDemo {
+        
+        	public static void main(String[] args) {
+        		A.B ab = new C();//向上转型
+        		ab.print();
+        	}
+        
+        }
+        
+        
+        ```
+    
+    - 抽象可以帮助我们在对相同父类的子类进行集体操作时，方便的调用抽象类的方法并进行区别性的输出，即不同的抽象实现，并且输出不同的内容。
+    
+      - ![1662535630628](asserts\1662535630628.png)
 
-  - 在顶级，类可以用public修饰，对所有类可见；没有修饰符，默认为package-private，它只在自己的包中可见【public、package-private】
-  - 在成员级别，private指定该成员只能在自己的类中访问；protected指定该成员只能在自己的包中访问，或者其他包的该类的子类
-    - 在A类继承B类的情况下，想要通过A来对B中protected修饰的成员变量进行赋值时，需要该变量加上static关键字，才能直接通过类名定义，并且需要在B类所属的包下操作
+**为什么java没有多继承？**
 
-- 理解transient关键字
+-  假设我们有类B和类C，它们都继承了相同的类A。另外我们还有类D，类D通过多重继承机制继承了类B和类C。 这时候，因为D同时继承了B和C，并且B和C又同时继承了A，那么，D中就会因为多重继承，继承到两份来自A中的属性和方法。
 
-  - transient：瞬态的，在HashMap和ArrayList的底层中大量的运用，来保证空间的不浪费，修饰了transient的关键字是不会被序列化的，也就是这部分数据在序列化时会是null，但是HashMap/ArrayList里面有通过writeObject方法，序列化时会调用这个方法将其持久化，在反序列化时，调用readObject，将其恢复出来
-    - 这个功能也可以用于隐藏一些关键信息，即你希望在类中运行时进行调用并在反序列化时不进行数据传输的场景
+  这时候，在使用D的时候，如果想要调用一个定义在A中的方法时，就会出现歧义。
 
-- 基本数据类型字节数？【新核云】
+  因为这样的继承关系的形状类似于菱形，因此这个问题被形象地称为菱形继承问题。
 
-  - ![1649731872247](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1649731872247.png)
+  而C++为了解决菱形继承问题，又引入了**虚继承**。
 
-- 创建对象的方式有哪些？【新核云】
+  因为支持多继承，引入了菱形继承问题，又因为要解决菱形继承问题，引入了虚继承。而经过分析，人们发现我们其实真正想要使用多继承的情况并不多。
 
-  - 使用new创建
+-  ![img](asserts\16145019571199.jpg) 
 
-  - 使用反射机制创建
+**成员变量和局部变量的区别**
 
-    - 可以使用class类的newInstance方法调用无参构造创建对象
-    - 使用Constructor类的newInstance方法
+- 在类中的位置不同
+  - 成员：类中方法上
+  - 局部：方法定义中或方法声明上
+- 在内存中的位置不同
+  - 成员：在堆中
+  - 局部：在栈中
+- 生命周期不同
+  - 成员：随着对象的创建而存在，随着对象的创建而消失
+  - 局部：随着方法的调用而存在，随着方法的调用完毕而消失
+- 初始化值不同
+  - 成员：有默认值
+  - 局部：没有默认值，必须定义赋值后，才能使用
 
-  - 使用clone方法
+**static关键字的注意点**
 
-    - 无论何时我们调用一个对象的clone方法，jvm就会创建一个新的对象，将前面对象的内容全部拷贝进去。用clone方法创建对象并不会调用任何构造函数
+- 可以修饰类、方法、成员变量
+- 不可以修饰局部变量
+- 用于创建类级别的变量和方法： 使用static关键字修饰的成员变量和成员方法属于类，而不是属于对象。这意味着可以**通过类名直接访问这些变量和方法，而无需创建类的实例**。
+- 用于共享变量： 由于static变量属于类，因此在**类的所有实例中都共享这个变量**。这可以用来在**多个对象之间共享状态或数据**。
+- 用于代码块： 静态代码块是在类加载时执行的，它可以用来执行类级别的初始化代码。
 
-  - 使用反序列化（需要原有类实现Serializable接口）
+**理解private、public、protected关键字**
 
-    - ```java
-      ObjectInputStream Obji = new ObjectInputStream(new FileInputStream("Object1.txt"));
-              Teacher t =(Teacher) Obji.readObject();
-              System.out.println(t.getName()+t.getAge());
-      ```
+- 在顶级（类或接口等），类可以用public修饰，对所有类可见；没有修饰符，默认为package-private，它只在自己的包中可见【public、package-private】
+- 在成员级别，private指定该成员只能在自己的类中访问；protected指定该成员只能在当前类、子类和同一个包中访问 （子类不一定非要是同一个包下）
+-  另外，需要注意的是，尽管使用private关键字可以隐藏类的实现细节，但**如果在类的方法中暴露了private成员变量的getter和setter方法，仍然可以在类的外部访问这些成员变量**。因此，使用private关键字并不意味着完全防止对成员变量的访问。 
 
-- 如何正确退出一个多层嵌套循环？【新核云】
+**理解transient关键字**
+
+transient：瞬态的，在Java中，transient是一个关键字，用于修饰类的成员变量，它的作用是告诉Java虚拟机在序列化该对象时，这个成员变量不需要被序列化。
+
+具体来说，当一个对象被序列化时，它的所有成员变量都会被序列化，并写入序列化流中。但是，有些成员变量可能不希望被序列化，例如缓存数据、临时状态等。在这种情况下，可以使用transient关键字修饰这些成员变量，这样它们就不会被序列化，而是在反序列化时被赋予默认值。
+
+需要注意的是，transient关键字只能修饰成员变量，不能修饰方法或类。此外，被transient修饰的成员变量不能被静态修饰符所修饰，因为静态成员变量是类级别的，它们不能被序列化或反序列化。
+
+ **序列化和反序列化大多数在哪些场景用到 ？**
+
+1. 网络传输：将Java对象序列化成字节流，在网络上传输，接收方再将字节流反序列化成Java对象。
+2. 缓存存储：将Java对象序列化成字节流，存储在缓存中，读取时再将字节流反序列化成Java对象。
+3. 消息队列：将Java对象序列化成字节流，发送到消息队列，消费者从消息队列中取出字节流，再反序列化成Java对象进行处理。
+4. 分布式存储：将Java对象序列化成字节流，存储在分布式存储系统中，需要时再反序列化成Java对象。
+5. 远程调用：将Java对象序列化成字节流，通过远程调用协议传输，接收方再将字节流反序列化成Java对象。
+
+这些场景中，序列化和反序列化是将Java对象与字节流进行转换的重要手段，以实现跨网络、跨进程、跨节点等数据传输和存储的需求。
+
+ **private static final long serialVersionUID = 1L;是什么意思** 
+
+在Java中，Serializable接口是一个标记接口，用于表示一个类可以被序列化和反序列化，但它并没有包含任何方法。当一个类实现了Serializable接口后，Java的序列化机制就可以对这个类的实例进行序列化和反序列化操作。
+
+**而serialVersionUID是一个序列化版本号，用于标识类的不同版本。在进行序列化和反序列化时，JVM会使用该版本号来确定类的版本是否一致**。如果版本号不同，则会抛出InvalidClassException异常。
+
+一般情况下，如果一个类实现了Serializable接口，则应该给该类添加一个名为serialVersionUID的静态常量，用于指定该类的序列化版本号。如果没有指定，则系统会根据类的结构自动生成一个版本号。**如果在后续修改了该类的结构，需要重新生成该类的序列化版本号，以保证兼容性**。
+
+ 假设有一个Person类，代码如下： 
+
+```java
+public class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private int age;
+}
+```
+
+ 假设这个类已经被使用了一段时间，而后又对该类进行了修改，增加了一个字段`address`，代码如下： 
+
+```java
+public class Person implements Serializable {
+    private static final long serialVersionUID = 2L;
+    private String name;
+    private int age;
+    private String address;
+}
+```
+
+由于类的定义发生了变化，因此我们需要手动递增`serialVersionUID`的值，这里将`serialVersionUID`的值从1L改为了2L。
+
+这样做的好处是，当老版本的对象被反序列化成新版本的对象时，新版本中新增的字段会被初始化为默认值，而不会导致反序列化失败。但是需要注意，如果对类的修改破坏了类的兼容性，那么手动递增`serialVersionUID`的值也无法避免反序列化失败的问题。
+
+**基本数据类型字节数？【新核云】**
+
+-  Java 的基本数据类型字节数在不同操作系统或版本上是一致的，这是由 **Java 虚拟机规范所定义**的。Java 中的基本数据类型（如 int、long、float、double 等）的大小是固定的，例如 int 类型是 4 个字节，double 类型是 8 个字节。这些**数据类型的大小不会因为操作系统或版本的变化而改变**。 
+- 1个字节=8位，1 byte=8 bit
+
+- ![1649731872247](asserts\1649731872247.png)
+
+**创建对象的方式有哪些？【新核云】**
+
+- 使用**new创建**
+
+- 使用**反射机制创建**
+
+  - 可以使用class类的newInstance方法调用无参构造创建对象
+  - 使用Constructor类的newInstance方法
+
+- 使用**clone方法**
+
+  - 无论何时我们调用一个对象的clone方法，jvm就会创建一个新的对象，将前面对象的内容全部拷贝进去。用clone方法创建对象并不会调用任何构造函数
+
+- 使用**反序列化**（需要原有类实现Serializable接口）
+
+  - ```java
+    ObjectInputStream Obji = new ObjectInputStream(new FileInputStream("Object1.txt"));
+            Teacher t =(Teacher) Obji.readObject();
+            System.out.println(t.getName()+t.getAge());
+    ```
+
+- 使用**工厂的方法创建对象**，不需要考虑new时候那种对象的具体类型、构造函数参数和个数，直接就可返回一个对象， 可以降低耦合度，提高代码的灵活性和可扩展性，并且java中对象池一般都利用了对象的复用，避免频繁创建和销毁对象，提高了系统的性能和扩展性。 
+
+  - ```java
+    public class Person {
+        private String name;
+        private int age;
+    
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+    
+        // getter and setter methods
+    
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
+    }
+    
+    public class PersonFactory {
+        public static Person createPerson(String name, int age) {
+            return new Person(name, age);
+        }
+    }
+    
+    public class Main {
+        public static void main(String[] args) {
+            Person person = PersonFactory.createPerson("John", 20);
+            System.out.println(person);
+        }
+    }
+    ```
+
+**如何正确退出一个多层嵌套循环？【新核云】**
 
   - 在最外层通过一个标签进行标记，然后通过break 标签名;退出
 
-- 深拷贝与浅拷贝的区别？【新核云】
+**深拷贝与浅拷贝的区别？【新核云】**
 
-  - 拷贝的概念其实有涉及到引用拷贝和对象拷贝的概念
+- 拷贝的概念其实有涉及到引用拷贝和对象拷贝的概念
 
-    - 引用拷贝，就比如我new一个teacher1，然后我再new一个teacher2等于它，这就是引用拷贝，底层是teacher1和teacher2从栈区对堆的new的对象的引用
+  - 引用拷贝，就比如我new一个teacher1，然后我再new一个teacher2等于它，这就是引用拷贝，底层是teacher1和teacher2从栈区对堆的new的对象的引用
 
-    - 对象拷贝，是clone出来一个新的对象，底层是两个引用指向不同的堆内存
+  - 对象拷贝，是clone出来一个新的对象，底层是两个引用指向不同的堆内存
 
-      - 浅拷贝，指的是拷贝的对象比如student1和student2分别指向了不同的对象，但是这两个对象里面引用的共同对象teacher，还是指的是同一个堆，并没有变成两个新的对象
+    - 浅拷贝，指的是拷贝的对象比如student1和student2分别指向了不同的对象，但是这两个对象里面引用的共同对象teacher，还是指的是同一个堆，并没有变成两个新的对象
 
-      - <img src="https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/20200830152336282.png" alt="在这里插入图片描述" style="zoom: 25%;" />
+    - <img src="asserts\20200830152336282.png" alt="在这里插入图片描述" style="zoom: 25%;" />
 
-      - 深拷贝，深拷贝是一个整个独立的对象拷贝，深拷贝会拷贝所有的属性,并拷贝属性指向的动态分配的内存。当对象和它所引用的对象一起拷贝时即发生深拷贝。深拷贝相比于浅拷贝速度较慢并且花销较大
+    - 深拷贝，深拷贝是一个整个独立的对象拷贝，深拷贝会拷贝所有的属性,并拷贝属性指向的动态分配的内存。当对象和它所引用的对象一起拷贝时即发生深拷贝。深拷贝相比于浅拷贝速度较慢并且花销较大，**可以通过重写clone方法实现简而言之，深拷贝把要复制的对象所引用的对象都复制了一遍**
 
-        **可以通过重写clone方法实现**
 
-        **简而言之，深拷贝把要复制的对象所引用的对象都复制了一遍**
+**在Java中，3*0.1==0.3的结果？**
 
-- 32位系统和64位系统的int字节数的区别？【新核云】
+- int：整数，double：小数，这种运算的场景是会产线精度丢失的，但是处于一个不确定的状态
 
-  - 数据类型占内存的位数与操作系统的位数以及编译器有关，一般情况下在当前主流的编译器中int类型无论在32位或64位系统中都是4个字节
+**什么是内存溢出和内存泄漏？【新核云】**
 
-- 在Java中，3*0.1==0.3的结果？
+- 内存泄漏：一个无用的对象，应该被回收，却因为某种原因一直未被回收，**内存泄漏是导致内存溢出的其中原因中的一种**
 
-  - int：整数，double：小数，这种运算的场景是会产线精度丢失的，但是处于一个不确定的状态
+- 内存溢出：JVM的堆无法存储应该活着的对象了（列举几个内存溢出的原因）
 
-- 什么 内存溢出和内存泄露？【新核云】
+  - 内存泄漏：这是导致内存溢出的主要原因之一，当程序中的某些对象不再使用时，却没有被垃圾回收器回收，这些对象将一直占用着内存空间，最终导致内存不足。
+  - 内存申请过多：如果程序中频繁申请大量的内存，而没有及时释放已经使用过的内存，也会导致内存溢出的发生。
+  - 堆空间过小：如果为Java虚拟机分配的堆空间过小，无法满足程序的内存需求，也可能导致内存溢出的发生。
+  - 内存波动：如果程序中的内存需求不稳定，而系统没有足够的缓冲空间，就可能导致内存溢出的发生。
+  - 代码中存在缺陷：如果程序中存在缺陷或者bug，可能会导致程序在运行时产生大量的临时对象，从而导致内存溢出的发生。
 
-  - 什么是内存溢出和内存泄露？
-
-    - 内存泄露：一个无用的对象，应该被回收，却因为某种原因一直未被回收
-
-    - ```java
-      public class Simple {
-       
-          Object object;
-       
-          public void method1(){
-              object = new Object();
-          //...其他代码
+- ```java
+  内存溢出：
+  public class MemoryOverflowExample {
+      public static void main(String[] args) {
+          List<Integer> list = new ArrayList<Integer>();
+          while (true) {
+              list.add(1);
           }
       }
-      严格意义上这里的object在被方法调用后，存在内存泄露，应该定义成局部变量或者使用完赋值成null值
-      public class Simple {
-       
-          Object object;
-       
-          public void method1(){
-              object = new Object();
-              //...其他代码
-              object = null;
+  }
+  内存泄漏：
+  public class MemoryLeakExample {
+      private static List<Integer> list = new ArrayList<Integer>();
+  
+      public static void main(String[] args) {
+          while (true) {
+              list.add(1);
           }
       }
-      ```
+  }
+  ```
 
-    - 内存溢出：JVM的堆无法存储应该活着的对象了
-
-- 类与对象与实例的概念
+**类与对象与实例的概念**
 
   - 类是指我们定义的Java类，指某一类型
-
+  
   - 对象指我们去new创建出来的类的对象，我们通过对象名找到这个对象，这个对象与自己类的关系是，这个对象是它所属类的一个实例
-
+  
     - 类在实例化时，类里面的成员变量如果没有初始值，将默认处于0，0.0，false，null及□
-
+  
   - 实例并不一定就等于对象，在多态场景下，对象是部分实例化的形态
-
+  
   - ```
     //Child extends Person
     Person person = new Child();部分实例化
     Child child = new Child();实例化
     ```
 
-- Java程序是解释执行还是编译执行？
+**Java程序是解释执行还是编译执行？**
 
   - **既有解释执行，也有编译执行**，java语言的执行顺序是首先通过javac工具将java文件转换成.class字节码文件，这类文件被称为IR（Intermediate Representation），即中间表达式，这些class文件需要通过JVM进行加载转换成二进制机器语言，才能够被CPU识别加载，而类加载的这样的过程，就是解释执行，这个我们可以通过反编译很直观的看到；当某一方法调用次数达到即时编译定义的阈值时，就会触发即时编译，这时即时编译器会将IR进行优化，并生成这个方法的机器码，后面再调用这个方法，就会直接调用机器码执行，这个就是编译执行的过程
-
+  
     - 注意点，达到次数的机器码会存储在`CodeCache`中，`CodeCache`指堆外内存区
-
+  
   - ```
     // javap -c JITDemo2.class
     
@@ -168,32 +332,65 @@ Be a Coder，任职要求
     }
     ```
 
-- `JDK`、`JRE`、`JVM`的区别和联系？
+**`JDK`、`JRE`、`JVM`的区别和联系？**
 
-  - `JDK`包括`JRE`+`java`工具（`javac`+`java`），`JRE`包括`JVM`；
+`JDK`包括`JRE`+`java`工具（`javac`+`java`），`JRE`包括`JVM`；
 
-- 在不重写对象的toString()方法时，直接打印对象名是内存地址吗？
+**在不重写对象的toString()方法时，直接打印对象名是内存地址吗？**
 
-  - 不是，这个对象名是基于对象的hashcode和对象名生成的一个字符串
+不是，这个对象名是基于对象的hashcode和对象名生成的一个字符串
 
-- ==和equals的区别
+**==和equals的区别**
+
   - ==是内存地址值
   - equals也是，但是可以重写，然后比较内容值
     - 值得注意的点是，如果你在class里new两个对象（基于相同类），里面属性的值是一样的，你去重写hashcode方法，让这两个对象的hashcode相等，这个时候这两个对象并不会指向同一个堆内存空间，在实际意义上，这两个对象还是相互独立的，拥有独立的堆内存空间，所以这个时候你去equals比较这两个对象的时候，还是false，堆内存地址是不一样的，debug可以看到这个状况
   
-- final的理解
-  - 修饰类：不能被继承，修饰方法：方法不能被重写，但是可以重载，修饰变量：变量一旦赋值就不可以更改值
-  - 修饰成员变量定义时需要直接赋值，修饰局部变量定义时不用，但是使用时要赋值，后续值不可更改
-  - 修饰引用类型的变量，不能再指向另一个堆地址，但是里面的值可更改
 
-- 为什么局部内部类和匿名内部类只能访问局部final变量？
+ **为什么要重写hashcode方法?** 
 
-  - 外部类运行结束后会对局部变量进行销毁，Java对其进行了copy使得内部类可以使用，但是在使用初衷是不希望局部变量进行改变的，所以加个final进行约定，不允许再更改
+在 Java 中，对象的 `hashCode()` 方法用于获取对象的哈希码值，这个哈希码值通常会在基于哈希的数据结构中使用，例如 `HashMap`、`HashSet` 等。哈希码可以看作是一个对象的身份证号码，可以用来快速比较对象是否相等。
 
-- `String`、`StringBuilder`及`StringBuffer`的区别
-  
-  - `StringBuilder`>`StringBuffer`>`String`，`StringBuilder` `stringBuilder` = new `StringBuilder`("`wuman`");
-  - `StringBuffer`被synchronized修饰，线程安全，性能稍差，String每次new新对象，性能最差
+如果你想要将一个对象插入到基于哈希的数据结构中，并且希望它能够正确地插入和查找，那么你需要确保两个相等的对象返回相同的哈希码值。因此，当我们重写一个类的 `equals()` 方法时，通常也需要重写 `hashCode()` 方法，以确保相等的对象具有相等的哈希码值。
+
+如果没有正确实现 `hashCode()` 方法，那么可能会导致哈希冲突，即两个不同的对象返回了相同的哈希码值。当这种情况发生时，它们将被放入同一个哈希桶中，这可能导致基于哈希的数据结构性能下降。
+
+因此，重写 `hashCode()` 方法是为了确保对象在基于哈希的数据结构中能够正确地插入和查找，从而提高代码的性能。
+
+ **java中哪些数据结构是基于哈希的，以及阐述一下，使用哈希结构的好处与坏处** 
+
+Java中常用的基于哈希的数据结构有 HashMap、HashSet、Hashtable、LinkedHashMap、LinkedHashSet等。
+
+基于哈希的数据结构主要依赖于对象的哈希码来进行查找、插入、删除等操作，从而使这些操作的时间复杂度达到常数级别，具有较高的效率。在使用哈希结构时，通过哈希函数将对象的键映射到一个数组下标上，然后将对象存储在该下标的链表或红黑树中。由于哈希函数的设计需要考虑均匀性和碰撞概率等因素，因此优秀的哈希函数能够减少哈希冲突的概率，提高基于哈希的数据结构的性能。
+
+基于哈希的数据结构的优点包括：
+
+- 查找、插入、删除等操作的时间复杂度都是常数级别，具有高效性；
+- 可以实现快速的数据去重和数据集合运算（如求交集、并集等）；
+- 可以通过哈希函数进行对象的快速定位。
+
+基于哈希的数据结构的缺点包括：
+
+- 哈希函数设计不合理会导致哈希冲突，影响性能；
+- 由于哈希函数是不可逆的，因此基于哈希的数据结构不能直接支持范围查询；
+- 在使用链表解决哈希冲突时，会造成额外的空间浪费和链表遍历的性能问题；
+- 基于哈希的数据结构在并发环境下存在线程安全问题，需要进行额外的同步处理。
+
+**final的理解**
+
+- 修饰类：不能被继承，修饰方法：方法不能被重写，但是可以重载，修饰变量：变量一旦赋值就不可以更改值
+- 修饰成员变量定义时需要直接赋值，修饰局部变量定义时不用，但是使用时要赋值，后续值不可更改
+- 修饰引用类型的变量，不能再指向另一个堆地址，但是里面的值可更改
+
+**为什么局部内部类和匿名内部类只能访问局部final变量？**
+
+- 外部类运行结束后会对局部变量进行销毁，Java对其进行了copy使得内部类可以使用，但是在使用初衷是不希望局部变量进行改变的，所以加个final进行约定，不允许再更改
+
+**`String`、`StringBuilder`及`StringBuffer`的区别**
+
+- `StringBuilder`>`StringBuffer`>`String`，`StringBuilder` `stringBuilder` = new `StringBuilder`("`wuman`");
+- `StringBuffer`被synchronized修饰，线程安全，性能稍差，String每次new新对象，性能最差
+
 - 多线程使用共享的变量时使用`StringBuffer`，其他场景优先使用`StringBuilder`
   
 - 重载和重写的区别？
@@ -207,6 +404,7 @@ Be a Coder，任职要求
       - 普通类里是不能定义抽象方法的，定义时会直接`CheckedException`
   - 类与类只能单继承或多层继承，类与接口可以多实现，接口与接口可以多继承
   - 抽象类里面定义的都是一个继承体系中的共性内容（代码复用，现有子类，提取共用代码），接口是功能的集合,是一个体系额外的功能，是暴露出来的规则；
+    - 继承是针对事物本质的抽象（is a），接口是对行为的抽象；
   
 - List和Set的区别
   - List有序可重复，Set无序不可重复，可以get下标或者迭代器
@@ -272,7 +470,7 @@ Be a Coder，任职要求
 
 - 什么是双亲委派模型？
 
-  -  ![img](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NvZGV5YW5iYW8=,size_16,color_FFFFFF,t_70) 
+  -  ![img](asserts\watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NvZGV5YW5iYW8=,size_16,color_FFFFFF,t_70) 
   - 好处：安全性，避免人员编写相同功能类进行替换；避免重复加载，可通过类加载器的不同来区分
   
 - Java中的异常体系？
@@ -282,10 +480,6 @@ Be a Coder，任职要求
   - Error，程序无法处理的错误，`OOM`（内存溢出）
   - `Exception：RunTimeException`，`CheckedException`（`IDE`自动检测出来，比如语法错误）
 
-- `GC`如何判断对象可以被回收？
-
-  - 引用计数法：每个对象有一个引用计数属性，新增一个引用时计数+1，引用释放时-1，计数为0时可以回收（`JVM`不适用此方法）
-  - 可达性分析法：从`GC` Roots开始向下搜索，搜索过的路径称为引用链，当一个对象到`GC` Roots没有任何引用链相连时，则证明此对象是不可用的，那么`JVM`就判断是可回收对象
 
 ##### JavaWeb：
 
@@ -315,20 +509,20 @@ Be a Coder，任职要求
 
 #### 对JVM原理有一定的了解
 
-##### JVM：
-
 - 能简单介绍一下JVM吗？
 
   - JVM是Java语言的核心，当我们写好这些.java的文件后，我们会先把它编译成.class文件，编译好之后我们的JVM会把这些.class文件载入到它里面进行运行，JVM内部主要分为四个部分，首先是.class文件进入的部分，**类加载器**，用于加载解析这些生成的.class文件，然后加载到**运行时数据区**，也就是JVM运行时所管理的**内存**，编译完的.class文件机器是不能识别的，所以我们要将这些文件通过JVM的第三个主要部分，**执行引擎**，来将这些文件转化成机器可识别的二进制文件交给CPU处理器去执行，这部分也说明了Java语言能够跨平台，通过这样的方式，Java代码最终都可以转化成机器语言，最后一部分叫做**本地方法接口**（JNI，Java Native Interface），用于调用那些基于其他语言的类库，比如CAS的底层是没有方法体的，方法都是用native修饰的
 
 - 能说下JVM的内存组成吗？（**运行时数据区**）
 
-  -  ![在这里插入图片描述](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTcwMTAy,size_16,color_FFFFFF,t_70) 
+  -  ![在这里插入图片描述](asserts\watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTcwMTAy,size_16,color_FFFFFF,t_70) 
 
   - 方法区和堆，属于线程共享的区域，生命周期和JVM相同，JVM启动时，这两个区域即创建
 
-    - 方法区，用于存储解析.class文件产生的（Klass对象，可以理解成Java类在虚拟机内部的表示）【class part】+（静态变量+常量+注解+方法计数器等）【non-class part】，jdk1.8以前，方法区被称为永久代（Perm），1.8后经过优化，被称为元数据空间（MetaSpace），可导致OOM（加载的class文件太多了）
+    - 方法区，用于存储解析.class文件产生的（Klass对象，可以理解成Java类在虚拟机内部的表示）【class part】+（静态变量+常量+注解+方法计数器等）【non-class part】，jdk1.8以前，方法区被称为永久代（Perm），1.8后经过优化，被称为元数据空间（MetaSpace），可导致OOM（加载的class文件太多了），还有就是StringTable被迁移至Heap中，而方法区被实现为MetaSpace替代，并且使用的是系统的本地内存，这些区别都是基于Oracle Open JDK的Hot Spot版本JVM如下图
 
+    - ![1667288391477](asserts\1667288391477.png)
+  
       - ```
         class part 被称作 Compressed Class Space，这个名字会有点怪，因为 Klass 本身其实没有使用压缩技术，而是引用它们的指针被压缩了
         
@@ -348,32 +542,112 @@ Be a Coder，任职要求
         
         在 Class Space 和 Non-Class Space 中，分别都有 VirtualSpaceList 和 ChunkManager 两个结构。
         
-        但是对于 Class Space，既然我们需要一个连续的空间我们不能使用一个链表来存放所有的 Node，所以这个链表退化为只有一个节点，并且不能扩展。这个 Node 就是 compressed class space，和 Non-Class Space 中的 Node 相比，它可是巨大无比
         ```
-
-      - <img src="https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/metaspace-classspace-duality.png" alt="alt text" style="zoom:50%;" />
-
-      - ![alt text](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/metaspace-compressed-class-ptr.png)
-
-    - 堆，即**Java堆内存**，Java中内存最大的区域，-Xms java堆启动时内存，-Xmx java堆可扩展的最大内存，可导致OOM（引用对象溢出），GC的主要场所，几乎存储了Java中所有的对象的地方，每个 Java 对象，在它的头部，有一个引用指向 Metaspace 中的 Klass 结构
-
-    - 什么时候分配MetaSpace空间
-
-      - ![Metadata lifecycle - Allocation](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/metaspace-lifecycle-allocation.png)
-
-  - 虚拟机栈、本地方法栈和程序计数器属于线程私有的区域，不同线程之间互相也不能访问对方的这三块区域
-
+  
+    但是对于 Class Space，既然我们需要一个连续的空间我们不能使用一个链表来存放所有的 Node，所以这个链表退化为只有一个节点，并且不能扩展。这个 Node 就是 compressed class space，和 Non-Class Space 中的 Node 相比，它可是巨大无比
+        ```
+  
+      - <img src="asserts\metaspace-classspace-duality.png" alt="alt text" style="zoom:50%;" />
+  
+      - ![alt text](asserts\metaspace-compressed-class-ptr.png)
+      ```
+    
+      ```
+  
+  - 堆，即**Java堆内存**，Java中内存最大的区域，-Xms java堆启动时内存，-Xmx java堆可扩展的最大内存，可导致OOM（引用对象溢出），GC的主要场所，几乎存储了Java中所有的对象的地方，是线程共享的，需要考虑线程安全的问题，每个 Java 对象，在它的头部，有一个引用指向 Metaspace 中的 Klass 结构
+  
+  - 什么时候分配MetaSpace空间
+  
+      - ![Metadata lifecycle - Allocation](asserts\metaspace-lifecycle-allocation.png)
+  
+  - **虚拟机栈、本地方法栈和程序计数器属于线程私有的区域**，不同线程之间互相也不能访问对方的这三块区域
+  
     - **虚拟机栈**，就是我们常说的**栈内存**，是用于存储方法的内存模型，栈，即先进后出，杯装模型，每当在我们的Java代码里，你要调用一个方法的时候，咱们这个JVM都会把你的这个方法用一个对象进行封装，这个对象叫做栈帧，栈帧里存储了很对数据，其中比较重点的有一个叫做本地变量表的数据，它是用来存储我们方法中的局部变量的，栈帧入栈了，就代表这个方法被执行了
     - 虚拟机栈可导致OOM和栈深度溢出（方法无限递归）
     - 本地方法栈（Native），运行原理和虚拟机栈基本一致，虚拟机栈是针对Java方法的栈，本地方法是针对其它的语言设置的方法栈，用于其它语言的运行
+    - **程序计数器（也称pc寄存器）**，记录当前线程字节码执行到哪了，记录这个的原因，是因为我们Java语言多于多线程的执行机制采取的是抢占式的，线程互相之间都在抢时间片，当某个线程执行到某个位置然后程序需要切换去执行别的线程时，线程需要挂起并通过程序计数器提交自己的执行位置，待下次抢夺到时间片时，JVM可以知道此线程从哪里开始继续执行，这个区域是不会发生内存溢出的，主要是因为只是记录了线程运行的地址，占用的空间几乎可以忽略不计，即使是死循环也无法导致OOM
     
-  - 程序计数器，记录当前线程字节码执行到哪了，记录这个的原因，是因为我们Java语言多于多线程的执行机制采取的是抢占式的，线程互相之间都在抢时间片，当某个线程执行到某个位置然后程序需要切换去执行别的线程时，线程需要挂起并通过程序计数器提交自己的执行位置，待下次抢夺到时间片时，JVM可以知道此线程从哪里开始继续执行，这个区域是不会发生内存溢出的，主要是因为只是记录了线程运行的地址，占用的空间几乎可以忽略不计，即使是死循环也无法导致OOM
+  -  StringTable，即串池,1.8后被移至堆，原因是串池使用频繁，需要进行GC，而1.6之前在老年代里的串池触发GC的条件苛刻，串池使用如此频繁应该处于及时可以GC的区域，故转移至堆
   
+     -  常量池中的字符串仅是符号，第一次用到时才变为对象
+     -  利用串池的机制，来避免重复创建字符串对象
+     -  字符串变量拼接的原理是StringBuilder（1.8）
+     -  字符串常量拼接的原理是编译器优化
+     -  可以使用intern方法，主动将串池中还没有的字符串对象放入串池
+        -  1.8将这个字符串对象尝试放入串池，如果没有则并不会放入，如果没有则放入串池，会把串池中的对象返回（有的话不会放入，但是返回串池里面有的对象 ）
+  
+- StringTable性能调优
+
+  - 调整：-XX:StringTableSize=桶个数
+  - 考虑将字符串是否入池
+
+- Direct Memory（直接内存）
+
+  - 常见NIO操作中，用于数据缓冲区，即ByteBuffer使用的缓冲区空间就是直接内存，大大的优于普通IO
+    - bytebuffer.allocateDirect()底层主动对分配的直接内存，通过unsafe.freeMemory()进行了释放
+      - ByteBuffer的实现类内部，使用了Cleaner（虚引用）来监测ByteBuffer对象，一旦ByteBuffer对象被垃圾回收，那么就会由ReferenceHandler线程通过Cleaner的clean方法调用freeMemory来释放直接内存
+        - 有一个值得注意的点是，当我们显示关闭gc时，即使得system.gc()方法失效，由于gc失效导致bytebuffer对象不被回收，而Cleaner触发直接内存释放的条件就是通过referencehandler线程监听bytebuffer对象被回收时才调用unsafe进行回收，故关闭显示gc时，在代码里我们需要反射创建unsafe对象主动释放直接内存
+          - 显示关闭gc的原因是，system.gc()会触发老年代和年轻代的整体回收，大大的影响了程序的运行时间，有些程序员乱使用
+        - ![1667460062080](asserts\1667460062080.png)
+    - <img src="asserts\1667453138745.png" alt="1667453138745" style="zoom:50%;" />
+    - <img src="asserts\1667455274357.png" alt="1667455274357" style="zoom:50%;" />
+  - 分配回收成本较高，但读写性能高
+  - 属于系统内存，不受JVM内存回收管理
+
 - GC（垃圾回收）机制
   - 可作为GC Root的对象？
     - 栈帧所引用的对象（正在执行中的方法中引用的对象）
     - 方法区中类静态属性引用的对象
     - 方法区中类引用的常量对象
+  
+- `GC`如何判断对象可以被回收？
+
+  - 引用计数法：每个对象有一个引用计数属性，新增一个引用时计数+1，引用释放时-1，计数为0时可以回收（`JVM`不适用此方法）
+    - 循环引用直接GG，早期Python是这个
+  - 可达性分析法：从`GC` Roots开始向下搜索，搜索过的路径称为引用链，当一个对象到`GC` Roots没有任何引用链相连时，则证明此对象是不可用的，那么`JVM`就判断是可回收对象
+
+- 四种引用
+
+  - 强引用
+    - 只有所有GC Roots对象都不通过【强引用】引用该对象，该对象才能被垃圾回收
+  - 软引用（SoftReference）
+    - 仅有软引用引用该对象时，在垃圾回收后，内存仍不足时会再次触发垃圾回收，回收软引用对象
+    - 可以配合引用队列来释放软引用自身
+  - 弱引用（WeakReference）
+    - 仅有弱引用引用该对象时，在垃圾回收时，无论内存是否充足，都会回收弱引用对象
+    - 可以配合引用队列来释放弱引用自身
+  - 虚引用（PhantomReference）
+    - 必须配合引用队列使用，主要配合ByteBuffer使用，被引用对象回收时，会将虚引用入队，由Referenece Handler线程调用虚引用相关方法释放直接内存
+  - 终结器引用（FinalReference）
+    - 无需手动编码，但其内部配合引用队列使用，在垃圾回收时，终结器引用入队（被引用对象暂时没有被回收），再由Finalizer线程通过终结器引用找到被引用对象并调用它的finalize方法，第二次GC时才能回收被引用对象
+      - 所以效率极低，不推荐重写对象的finalize方法来进行垃圾回收
+
+- 垃圾回收是否涉及栈内存？
+
+  - 不涉及，栈帧对应着每一个调用的方法，调用完以后出栈即自动回收，而垃圾回收机制是针对JVM中堆内存设计的回收机制
+
+- 栈内存分配越大越好吗？
+
+  - 不是的，越大反而会影响多线程的线程上限，使得运行效率降低，每个栈即每个线程都是独立的，分配得越大越会使机器可运行的线程上限变少，分配大的栈内存除了可以用来做更多的方法递归操作外没有什么其他意义
+
+- 方法内的局部变量是否线程安全？
+
+  - 如果方法内局部变量没有逃离方法的作用访问，它是线程安全的
+
+- 线程诊断示例
+
+  - linux中用top指令定位哪个进程对cpu的占用过高
+  - ps H -eo pid,tid,%cpu|grep 进程id（用ps命令进一步定位是哪个线程引起的cpu占用过高）
+  - jstack 进程id
+    - 可以根据线程id（上述步骤的线程id需要进行十进制👉十六进制转换，并且对应的是nid而不是tid，因为此时上述找到的线程id是指的操作系统下的线程id（即本地id），nid即native（意为本地的） id，tid是java运行下的线程id）找到有问题的线程，进一步定位到问题代码的源码行号
+
+- 堆内存诊断
+
+  - jps 查看当前系统中有哪些java进程
+  - jmap 查看堆占用情况，jmap -heap 进程id
+  - jconsole工具 图形界面的，多功能的监测工具，可以连续监测
+  - jvisualvm工具 dump对快照进行分析，找到问题对象
+
 - 垃圾收集算法
   - 主流的GC机制大都采用分代收集算法，垃圾回收最主要的区域是对于堆内存的对象进行回收，Java对于堆内存的对象回收进行了分代，即年轻代和老年代
     - 年轻代代表的是创建完后线程运行完绝大部分都被回收掉的对象，采用的基础算法是复制算法，在年轻代内存中，Java加入了Eden和Survivor的概念，其实是一种**对复制算法的改进**，Java把复制算法中的正常运行区叫做Eden（伊甸园），把用于存储存活对象的内存存储区叫做Survivor（幸存者区），关于Survivor中值得注意的是，Java对于这个存储区的改进是把这个存储空间准备了两份，我就先叫它Survivor To和Survivor From，但是这个To和From是相对的，**程序运行时，当Eden中的对象装满之后，年轻代的`GC`（MinorGC）会被触发，JVM会将Eden中标记的存活对象复制到From里，然后清理Eden区，等到下次Eden装满触发年轻代`GC`（MinorGC），JVM会同时对Eden区及From区进行check，将Eden和From里标记的存活的对象复制到To中，然后清理Eden区，再触发年轻代`GC`（MinorGC）时，Survivor的角色就发生了转变，即JVM会去check Eden和To的内存，然后进行复制到From区的操作，如此反复来达成年轻代`GC`******（MinorGC）****，**这种改进把降低了原有复制算法内存的浪费**
@@ -383,8 +657,8 @@ Be a Coder，任职要求
         - 还有就是可以设置对象阈值，即设置Eden的运行对象大小假如超过此阈值，即直接晋升至老年代
       
       - 复制算法，相对来说是比较浪费空间的算法，它的原理是有两个空间，一个空间专门用于存储复制的不可回收的对象，一个空间用于运行，针对我们运行后的对象进行追踪，当运行后的对象与栈帧仍然保持联系，对这些对象进行标记，视其为不可回收对象，复制进用于存储这些对象的空间并指定地址顺序，然后对运行空间进行整体回收，这样做的好处是解决了清楚算法内存碎片的问题
-      - 清除算法，即对运行空间中需要回收的对象进行标记，然后回收，但是会产生内存碎片的问题，，**当需要分配较大对象时，由于找不到合适的空闲内存而不得不再次触发垃圾回收动作**
-      - 整理算法，先搜索存储对象，对可存储对象进行排序，再GC
+      - 标记清除算法，即对运行空间中需要回收的对象进行标记，然后回收，但是会产生内存碎片的问题，，**当需要分配较大对象时，由于找不到合适的空闲内存而不得不再次触发垃圾回收动作**
+      - 标记整理算法，先搜索存储对象，对可存储对象进行排序，再GC
   
 - 什么情况下需要开始类加载呢？
   - 在遇到 new、putstatic、getstatic、invokestatic 字节码指令时，如果类尚未初始化，则需要先触发初始化。
@@ -392,6 +666,7 @@ Be a Coder，任职要求
   - 对类进行反射调用时，如果类还没有初始化，则需要先触发初始化
   - 初始化一个类时，如果其父类还没有初始化，则需要先初始化父类
   - 虚拟机启动时，用于需要指定一个包含 main() 方法的主类，虚拟机会先初始化这个主类
+  
 - 类的加载过程
   - 加载（Loading）→验证（Verification）→准备（Preparation）→解析（Resolution）→初始化（Initialization）
     - 第一阶段，类加载器读到我们的.class文件得到二进制的流
@@ -399,6 +674,7 @@ Be a Coder，任职要求
     - 第三阶段，准备阶段，在方法区为class文件及静态变量开辟好内存
     - 第四阶段，解析过程，将符号引用转为直接引用
     - 第五阶段，初始化阶段，对类里的静态变量进行真正的赋值，初始化静态代码块
+  
 - JVM性能监控与故障处理
   - 如何排除内存溢出的问题
     - 可视化监控平台Jconsole查看内存使用状况
@@ -406,6 +682,39 @@ Be a Coder，任职要求
     - 与Jmap的文件搭配，使用Jprofiler处理.hprof文件，路由到问题类，然后处理
     - 与Jconsole搭配，使用Jstack指令追踪堆栈异常状况，找到指定异常线程
   
+- JVM相关VM参数
+
+  - 堆初始大小 -Xms
+  - 堆最大大小 -Xmx或-XX:MaxHeapSize=size
+  - 新生代大小 -Xmn(初始和最大同时指定)或（-XX:NewSize=size+ -XX:MaxNewSize=size）
+  - 幸存区比例（动态） -XX:InitialSurvivorRatio=ratio和 -XX:+UseAdaptiveSizePolicy
+  - 幸存区比例 -XX:SurvivorRatio=ratio（ratio是8，伊甸园占8，剩下的一份From一份To）
+  - 晋升阀值 -XX:MaxTenuringThreshold=threshold
+  - 晋升详情 -XX:+PrintTenuringDistribution
+  - GC详情 -XX:+PrintGCDetails -verbose:gc
+  - FullGC前先进行MinorGC -XX:+ScavengeBeforeFullGC
+
+- 当多线程情况下导致堆内存溢出异常时，主线程会因此暂停吗？
+
+  - 不会，不影响
+
+- 关于垃圾回收器的选择【Serial其实就是串行的英语，Parallel是并行的英语】
+
+  - 串行【Serial，Serial Old】
+    - 单线程，堆内存较小，适合单人电脑
+  - 吞吐量优先的并行（吞吐量只GC占运行时间的比例，GC时间越少，吞吐量越高）【 Parallel Scavenge 】
+    - 多线程，堆内存较大，多核cpu
+    - 让单位时间内，STW的时间最短
+  - 响应时间优先的并行【CMS（concurrent并发，mark标记，sweep清除），G1，ZGC】
+    - 多线程，堆内存较大，多核cpu
+    - 尽可能让单次STW的时间最短（stop the world，GC时需要停止所有线程的这一行为的术语）
+      - CMS需要与ParNew+Serial Old搭配使用，由于是标记清除，所以会产生内存碎片，积累多了以后会导致并发失败，这时候就需要ParNew+SerialOld配合进行一次标记整理，但标记整理是很耗时的，这就和CMS初衷的响应时间优先直接矛盾，也是CMS最大的缺点，所以此GC后面被新的G1取代了
+  - G1垃圾回收器
+    - 同时注重吞吐量和低延迟
+    - 超大堆内存，会将堆划分成多个大小相等的区域
+    - 整体上是标记+整理算法，两个区域之间是复制算法
+  -  ![img](asserts\watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2l2YV9icm90aGVy,size_16,color_FFFFFF,t_70) 
+
 - JVM调优小结（目前只能说自己了解过）
 
 - ```
@@ -509,30 +818,54 @@ Be a Coder，任职要求
 ##### Spring：
 
 - 什么是Spring？
+  
   - 一个替代了重量级开发框架EJB的面向企业级应用开发的轻量级的解决方案，解决了EJB的运行环境苛刻（环境收费且闭源无法拓展功能，weblogic，websphere）、代码移植性差（运行需要实现相应环境的接口并且只能运行在对应的环境）的问题，轻就轻在这两点
-  - **Spring的优点**
-  - Spring在开发方面给java开发中分层开发的不同层级提供了解决方案，controller提供了springmvc，service层提供了aop技术，dao层整合了mybatis
-  - 整合了众多设计模式：工厂、代理、模板、策略
   
+- **Spring的优点**
+    - Spring在开发方面给java开发中分层开发的不同层级提供了解决方案，controller提供了springmvc，service层提供了aop技术，dao层整合了mybatis
+
+    - 整合了众多设计模式：工厂、代理、模板、策略
+
 - 列举一些Spring的重要模块？
-  
+
   - Spring JDBC：数据库连接；Spring ORM：整合ORM框架；Spring Test：Junit单元测试；Spring Aop：面向切面编程的实现；Spring Core：核心组件，IOC/DI
-  
+
 - Spring常用注解
-  
+
   - @RestController
   - @Service
   - @Mapper
-  
+
 - @Autowired和@Resource的区别
   - @Autowired是Spring的注解，@Resource是JDK的注解
   - @Autowired是基于类型导入Bean，@Resource是基于名称导入
   - @Autowired（required=false）可以搭配@Qualifier实现基于名称导入
-  
+
+- @Controller和@RestController的区别
+
+  - 一个共同的特点是这两个注解都包裹了@Component注解，即为了告诉开发者，当前使用此注解标注的类是代码API的Controller层
+  - @RestController包含了@Controller和@Responsebody
+  - @Controller的返回值是页面，更适合老旧的前后端一体式返回页面的开发
+  - @RestController中的@Responsebody使得方法可以返回前后端分离所需的json或者对象等信息
+
+- @Controller、@Service、@Respository注解的意义以及为什么DAO层不适用@Respository
+
+  @Controller、@Service、@Respository是Spring为了让开发者知晓当前标注类是用于开发层的哪一个位置作用的标识，本质上都是@Component，只不过变个别名用于区分
+
+  @Respository为什么不使用在Dao层是因为，Spring在整合Mybatis时，已经通过动态代理将我们DAO层定义的接口的实例进行生成了，也就是说，我们没有机会去在那个动态生成的类上进行标注，因为是动态的，配置即yml里针对DAO层进行的配置，如下图，Spring会自动进行映射然后通过namespace进行动态生成
+
+  ![1676450382129](C:\Users\dell\Desktop\asserts\1676450382129.png)
+
+- @Component和@Bean的区别
+
+  @Component （@Controller @Service @Respository）作用于类上，只有在我们的SpringBoot应用程序启用了组件扫描并且包含了被注解的类时才有效。通过组件扫描，Spring将扫描整个类路径，并将所有@Component注释类添加到Spring Context，这里有的不足就是会把整个类当成bean注册到spring 容器上，如果这个类中并不是所有方法都需要注册为bean的话，会出现不需要的方法都注册成为bean，这时候必须确保这些不需要的方法也能注册为bean或者在扫描中加filter 过滤这些不需要的bean,否者spring将无法成功启动。
+
+  @Bean相对来说就更加灵活了，它可以独立加在方法上，按需注册到spring容器，而且如果你要用到第三方类库里面某个方法的时候，你就只能用@Bean把这个方法注册到spring容器，因为用@Component你需要配置组件扫描到这个第三方类路径而且还要在别人源代码加上这个注解，很明显是不现实的。
+
 - SpringMVC的运行流程
-  
--  ![1655803796760](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1655803796760.png)
-  
+
+- ![1655803796760](asserts\1655803796760.png)
+
 - Bean的生命周期
 
   - > **spring 容器中的bean的完整生命周期一共分为十一步完成。**
@@ -592,14 +925,14 @@ Be a Coder，任职要求
   - ​          设置allowCircularReferences为false 会报循环依赖异常
 
 - 谈谈自己对于IOC和`AOP`的理解
-  
+
 - ```
   答题技巧：以一个总分的结果来回答
   总：当前问题回答的是哪些具体的点
   分：以1,2,3,4,5的方式具体分细节去描述相关的知识点，如果有哪些点不清楚，直接忽略过去
   在聊的时候突出一些技术名词（核心概念，接口，类，关键方法）
   ```
-  
+
   - ```
     总：
     SpringIOC，主要涉及的是两个概念
@@ -630,7 +963,7 @@ Be a Coder，任职要求
     - A实例化（）→B实例化→A半实例对象→B实例（含有A半实例对象）→A实例（B实例）
     
   - 控制反转，将创建和管理对象的事情交给Spring工厂，反射创建对象，解除耦合，满足开闭原则（打开扩展，关闭修改），配置Bean的方式有两种，分别是基于注解的`AnnotationConfigApplicationContext`和基于Xml的`ClassPathXmlApplicationContext`，	获取Bean实例是通过`DefaultListableBeanFactory`这个核心的`BeanFactory`实现类，`DefaultListableBeanFactory`中有两个Map属性，一个负责存放Bean的描述信息，就是对象是怎么定义的，一个是存放Bean的实例对象的集合
-  
+
     - 基于Xml进行DI，是需要在`ClassPath`文件夹下创建applicationContext.xml，并在其中进行我们要放入IOC容器的<bean>标签的配置
       
       - 注意点，<scope>配置Bean属性为单例（singleton，每次获得对象都是这一个）还是原型（prototype）
@@ -642,24 +975,26 @@ Be a Coder，任职要求
       - 为什么会提前初始化单例对象，是因为单例对象需要一直维护，毕竟我们每次使用的时候都是原来的对象
     
   - 面向切面，在已有的业务代码的基础上做前后的功能加强，基于动态代理实现
-  
+
     - 使用方式？
       
-      - 定义切面类，@Aspect`@Componet`
+      - 定义切面类，@Aspect`@Component`
       - 定义切入点表达式
       - 定义通知：前置，后置，异常，最终，环绕
       
     - 使用场景
-  
+
       - 日志收集
       - 数据库读写分离，如果是读类型的sql，切换到读库，如果是写类型的sql，切换到写库
-  
+
     - 动态代理主要指两种代理方式，JDK动态代理以及`Cglib`动态代理，JDK动态代理是基于接口实现的，Cglib则是基于原类是否可以被继承来实现
-  
+
     - 静态代理的问题是，随着开发项目的扩大，数量成倍增长，不利于管理，导致额外功能维护性差，修改复杂麻烦
-  
+
+    - 
+      
     - ```
-      //jdk动态代理，都需要目标类实现的接口
+      //jdk动态代理，都需要目标类实现接口
       public interface UltraManSell {
           float UltraManSell(int amount);
       }
@@ -714,7 +1049,7 @@ Be a Coder，任职要求
           }
       }
       ```
-  
+
 - 事务的失效场景
   - 数据库引擎不支持事务
   - 没有被Spring管理
@@ -728,7 +1063,7 @@ Be a Coder，任职要求
     - 事务捕获的异常默认的是RunTimeException，但是我们抛的是Exception不属于运行时异常，比运行时异常要大，这个时候事务就无法捕获这个异常
     - 所以我们往往会在事务注解中配置捕获异常的范围（rollbackFor = Exception.class）
   - *异常错误类型，默认捕获RuntimeException异常
-  
+
 - 事务的传播行为（7种，只需记REQUIRED和REQUIRED_NEW）
 
 | 传播行为                     | 含义                                                         |
@@ -808,7 +1143,7 @@ Be a Coder，任职要求
 
   - 
 
-  - <img src="https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzU2MzU2OTkz,size_16,color_FFFFFF,t_70" alt="img"  />
+  - <img src="asserts\watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzU2MzU2OTkz,size_16,color_FFFFFF,t_70" alt="img"  />
   
   - 自定义Starter
     
@@ -823,13 +1158,13 @@ Be a Coder，任职要求
 
  SpringSecurity的整体架构？
 
-  - ![1654914068711](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1654914068711.png)
+  - ![1654914068711](asserts\1654914068711.png)
 
     - **AuthenticationManager**接口负责了SpringSecurity的认证功能，AuthenticationManager 主要实现类为 ProviderManager，在 ProviderManager 中管理了众多 AuthenticationProvider 实例。在⼀次完整的 认证流程中，Spring Security 允许存在多个 AuthenticationProvider ，⽤来 实现多种认证⽅式，这些 AuthenticationProvider 都是由 ProviderManager 进⾏统⼀管理的。
 
     - Authentication认证以及认证成功的信息主要是由 Authentication的实现类进⾏保存的，其 
 
-      接⼝定义为![1654914425150](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1654914425150.png)
+      接⼝定义为![1654914425150](asserts\1654914425150.png)
 
       - getAuthorities 获取⽤户权限信息
       - getCredentials 获取⽤户凭证信息，⼀般指密码
@@ -852,25 +1187,25 @@ SpringSecurity的原理？
 
   - 在 Spring Security 中 认证、授权等功能都是基于**过滤器**完成的
 
-  - Spring Security 提供了 30 多个过滤器。默认情况下Spring Boot在对 Spring Security 进⼊⾃动化配置时，会创建⼀个名为SpringSecurityFilerChain 的过滤器，并注⼊到 Spring 容器中，这个过滤器将负责所有的安全管理，包括⽤户认证、授权、重定向到登录⻚⾯等。具体可以参考WebSecurityConfiguration的源码:![1654929502848](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1654929502848.png)
+  - Spring Security 提供了 30 多个过滤器。默认情况下Spring Boot在对 Spring Security 进⼊⾃动化配置时，会创建⼀个名为SpringSecurityFilerChain 的过滤器，并注⼊到 Spring 容器中，这个过滤器将负责所有的安全管理，包括⽤户认证、授权、重定向到登录⻚⾯等。具体可以参考WebSecurityConfiguration的源码:![1654929502848](asserts\1654929502848.png)
 
-    ![1654929535535](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1654929535535.png)
+    ![1654929535535](asserts\1654929535535.png)
 
   - 在引入SpringSecurity时，**SpringBootWebSecurityConfiguration**是默认对所有请求进行拦截的
 
-    - ![1654929708530](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1654929708530.png)
+    - ![1654929708530](asserts\1654929708530.png)
 
   - 涉及认证登录页面时，SpringSecurity会加载默认的登录页面并加载默认的用户数据，即通过**UserDetailService**通过刚才源码分析也能得知 UserDetailService 是顶层⽗接⼝，接⼝中loadUserByUserName ⽅法是⽤来在认证时进⾏⽤户名认证⽅法，默认实现 使⽤是**内存实现**，如果想要修改数据库实现我们只需要⾃定义UserDetailService 实现，最终返回 UserDetails 实例即可。默认情况下都会满⾜，此时**Spring Security**会提供⼀个**InMemoryUserDetailManager **实例
 
-    ![1654932081563](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1654932081563.png)
+    ![1654932081563](asserts\1654932081563.png)
 
-    ![1654932120975](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1654932120975.png)
+    ![1654932120975](asserts\1654932120975.png)
 
     **这就是默认⽣成** user **以及** uuid **密码过程**! **另外看明⽩源码之后，就知道只** 
 
     **要在配置⽂件中加⼊如下配置可以对内存中⽤户和密码进⾏覆盖。**
 
-    ![1654932150158](https://github.com/qingtingduizhang/Exception-Tips/blob/master/asserts/1654932150158.png)
+    ![1654932150158](asserts\1654932150158.png)
 
 
  什么是自定义认证？如何进行？
@@ -884,13 +1219,20 @@ SpringSecurity的原理？
 
 什么是OAuth2?Spring Security支持吗？
   - 一个用于**解决小型企业与用户之间的信任协议**，即我们登录一些小的app或网站时可以通过微信进行登录或者是微博进行登录
+
   - 支持的，对其进行了整合，通用的场景是结合JWT一起实现第三方登录
-如何保证token令牌不被篡改? (或token的组成)
+
+如何保证JWT的token令牌不被篡改? (或token的组成)
+
 - `json` web token由header（加密算法+token类型）+`payLoad`（失效时间+用户信息）+**signature**签名组成（加密算法(header + "." + `payLoad`+秘钥) == 签名     防止token被篡改）
 
-token令牌能否保证数据安全?
+JWT的token令牌能否保证数据安全?
 
 - 不保证 `http`==>`https`
+
+理解认证和授权？
+
+- 认证和授权，就像是一个国家的众多领导人一样，有一个册子里面，记录了领导人的姓名，类似通过核对领导人的姓名来证明用户的行为，就是认证，即对方是否为合法的领导人，而授权，则是针对领导人职务的不同，对应享有的权力则不同，即授权下的用户的可访问的相应资源
 
 ##### Kafka:
 
@@ -1713,7 +2055,7 @@ public interface AdminFeign {
 
 - 什么是JMM模型？
   
-  - java的内存模型，是一种抽象的概念，简单来说，就是说我们在定义一个变量时，这个变量会在主内存中进行存储，当我们使用线程对其进行调用的时候，并不是直接对其进行加载，而且在线程中有一个工作内存的概念，把主内存中的这个共享变量进行拷贝，然后储存在工作内存中，形成一个副本的共享变量进行使用，这个过程不是原子性的，所以在并发场景下会产生并发问题
+  - java的内存模型，是一种抽象的概念，简单来说，就是说我们在定义一个变量时，这个变量会在主内存中进行存储，当我们使用线程对其进行调用的时候，并不是直接对其进行加载，而是在线程中有一个工作内存的概念，把主内存中的这个共享变量进行拷贝，然后储存在工作内存中，形成一个副本的共享变量进行使用，这个过程不是原子性的，所以在并发场景下会产生并发问题
   -  ![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/754c7ccb02c7455b8c75e54ed8fc2d35~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp) 
   
 - 如何停止一个线程？
@@ -3341,7 +3683,90 @@ PERFORM_API_CALL()
 然后分析了一下最后选择从ThreadLocal去拿，那个时候对这个类的理解不是很深刻，ThreadLocal可以存储当前线程的一些数据
 ```
 
+### 前端
 
+##### Webpack
 
+**什么是Webpack？**
 
+- 现代 javascript 应用程序的 **静态模块打包器 (module bundler)**，即打包你的前端项目，使其更小。
+-  不仅仅是**JavaScript**文件，我们的**CSS**、**图片**、**json文件**等等在webpack中都可以被当做**模块**来使用。 
+-  Webpack最初被设计为JavaScript模块打包工具，但现在已经发展成为一种通用的资源打包工具，可以处理各种类型的文件，例如CSS、图像和字体等。 
 
+**实际开发中需要自己配置webpack吗？**
+
+- 实际开发中会使命令行工具（俗称 CLI）一键生成带有 webpack 的项目 
+- 开箱即用，所有 webpack 配置项都是现成的！ 
+- 我们只需要知道 webpack 中的基本概念即可！
+
+**webpack.config.js文件是用来干嘛的？**
+
+- webpack.config.js 是 webpack 的配置文件。webpack 在真正开始打包构建之前，会先读取这个配置文件， 
+
+  从而基于给定的配置，对项目进行打包。 
+
+**为什么vue创建的项目中没有webpack.config.js，而是vue.config.js？**
+
+- vue创建的项目是通过vue cli的，官方文档里给出了这样的解释（如图），也就是后续打包通过vue.config.js构建即可了
+- ![1682392770499](C:\Users\dell\Desktop\asserts\1682392770499.png)
+  - 即，创建项目时，已经集成了webpack和webpack-dev-server，图中的@vue/cli-service已经在package.json中，如图
+  - <img src="C:\Users\dell\Desktop\asserts\1682392974216.png" alt="1682392974216" style="zoom:50%;" />
+
+##### Vue
+
+**vue创建的项目中的webpack-dev-server作用是什么？**
+
+ Webpack-dev-server 是一个开发服务器，它可以为 Webpack 打包后的应用程序提供服务，使开发人员可以在本地环境中进行开发和测试。它提供了许多有用的功能，如**自动刷新**、**热替换**和**实时重载**等。 
+
+ **vue创建的项目中的babel.config.js 作用是什么？**
+
+babel.config.js 是用来配置 Babel 转译器的文件，它包含了一个 JavaScript 对象，其中定义了 Babel 的配置选项。Babel 可以将 ECMAScript 2015+（ES6+）的代码转换为向后兼容的 JavaScript 代码，以便在现有环境中运行。 
+
+ **vue创建的项目中的jsconfig.js 作用是什么？**
+
+是一个用于配置 JavaScript 语言服务的配置文件，它可以让编辑器（如 VS Code）更好地理解和支持 JavaScript 代码。 
+
+ **vue创建的项目中的package-lock.json作用是什么？package.json作用是什么？这两者有什么区别 ？**
+
+`package.json` 和 `package-lock.json` 都是 Node.js 项目中的重要文件，它们的作用如下：
+
+- `package.json`：用于描述项目的元信息和依赖信息。该文件通常包含项目的名称、版本号、作者、许可证等信息，还包含了项目依赖的第三方库（即所谓的 `dependencies` 和 `devDependencies`）和脚本命令等信息。当执行 `npm install` 命令时，npm 会根据 `package.json` 中的依赖信息安装项目所需的第三方库，并将它们保存到 `node_modules` 目录中。
+- `package-lock.json`：用于锁定项目依赖的版本信息。该文件是 npm 5 及以上版本中新增的特性，它会记录当前项目的所有依赖库的精确版本号，包括所有间接依赖库，以确保不同环境中安装的依赖库版本一致。在执行 `npm install` 命令时，npm 会根据 `package-lock.json` 中的版本信息来安装依赖库，以避免出现依赖库版本不一致的问题。
+
+总的来说，`package.json` 用于描述项目的元信息和依赖信息，而 `package-lock.json` 则用于记录依赖库的精确版本号，以确保不同环境中安装的依赖库版本一致。两者的主要区别在于：
+
+- `package.json` 中记录的依赖信息是模糊的（即只指定了依赖库的大版本号），而 `package-lock.json` 中记录的版本信息是精确的，它会指定依赖库的精确版本号。
+- `package.json` 是开发者手动维护的文件，而 `package-lock.json` 是 npm 自动生成的文件，它会在执行 `npm install` 命令时自动生成和更新。
+
+ **vue创建的项目中的.browserslistrc是啥 ？**
+
+ `.browserslistrc` 是一个配置文件，用于指定项目的目标浏览器和 Node.js 版本。该文件通常被用于各种前端工具中，例如 Babel、Autoprefixer、eslint-plugin-compat 等，以便这些工具可以根据配置自动将代码转换成目标浏览器或 Node.js 版本兼容的代码。 
+
+ **webpack 默认只能打包处理以 .js 后缀名结尾的模块。其他非 .js 后缀名结尾的模块， webpack 默认处理不了，需要调用 loader 加载器才可以正常打包，这些配置vue cli创建的项目的vue.config.js配置文件不需要去配置loader吗 ？**
+
+是的，Vue CLI 已经内置了一些常用的 loader，并在 `vue.config.js` 中进行了相应的配置。这些配置已经可以满足大部分项目的需求，通常情况下无需对其进行修改。 
+
+ **vue cli创建的vue项目下的开发和生产模式是如何区分的 ?**
+
+Vue CLI创建的Vue项目默认包含两个模式：开发模式和生产模式。在开发模式下，Vue CLI会启动一个开发服务器，该服务器会自动监视你的代码更改，并在保存代码后重新编译和刷新浏览器。此外，开发模式下的应用程序通常包含更多的调试信息和错误提示，以帮助开发人员更容易地调试应用程序。
+
+在生产模式下，Vue CLI会进行一些额外的步骤来优化应用程序的性能和大小。例如，它会自动压缩和混淆代码，删除未使用的代码和资源，并使用缓存来提高应用程序的加载速度。此外，生产模式下的应用程序通常不包含调试信息和错误提示，以减小应用程序的大小。
+
+你可以通过运行`npm run serve`来启动开发模式下的服务器，而生产模式下的应用程序可以通过运行`npm run build`命令来构建。构建后，你将在项目的`dist`目录下找到生成的生产模式代码。
+
+**vue的特性是啥？**
+
+- 数据驱动视图
+- 双向数据绑定
+
+**vue的核心原理？**
+
+![1682469775900](C:\Users\dell\Desktop\asserts\1682469775900.png)
+
+ **spring boot是java的应用于后端开发的脚手架，那么vue cli创建的vue项目也可以理解成应用于前端开发的脚手架吗 ？**
+
+是的，您的理解是正确的。Vue CLI创建的Vue项目可以被视为一个用于前端开发的脚手架，类似于Spring Boot是Java应用于后端开发的脚手架。
+
+Vue CLI提供了一些默认配置和插件，以帮助开发者更快地创建和开发Vue.js项目。Vue CLI创建的Vue项目可以包括单页应用程序（SPA）和多页应用程序（MPA），并提供了一些方便的命令行工具，以帮助开发者更轻松地构建、测试和部署应用程序。
+
+类似地，Spring Boot提供了一些默认配置和插件，以帮助开发者更快地创建和开发Java Web应用程序和微服务。Spring Boot提供了一些方便的特性，如自动配置、依赖注入等，以帮助开发者更轻松地处理业务逻辑和构建高效、可靠的应用程序。
